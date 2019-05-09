@@ -1,0 +1,21 @@
+.node {
+    -fx-background-color: #000000;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-padding: 4px;
+}
+
+#grid {
+    -fx-border-color: blue;
+    -fx-border-width: 3px;
+}
+
+#mainPane {
+    -fx-background-color: #000000;
+}
+
+#gameOverPane {
+    -fx-background-color: black;
+    -fx-border-color: yellow;
+    -fx-border-width: 3px;
+}
