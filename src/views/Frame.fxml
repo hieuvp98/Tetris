@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="609.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.Controller">
+<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="609.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.Controller">
    <children>
       <GridPane id="grid" fx:id="gridPane" gridLinesVisible="true" layoutX="5.0" layoutY="6.0" prefHeight="730.0" prefWidth="406.0">
       </GridPane>
@@ -57,5 +57,10 @@
             </Text>
             <Button fx:id="btnReplay" layoutX="280.0" layoutY="140.0" mnemonicParsing="false" text="Replay" />
          </children></Pane>
+      <Text fx:id="txtGameStatus" fill="WHITE" layoutX="475.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Running" textAlignment="CENTER" wrappingWidth="88.96875">
+         <font>
+            <Font name="Comic Sans MS" size="24.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

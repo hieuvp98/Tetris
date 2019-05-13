@@ -5,7 +5,6 @@ import entities_abstract.BlockBase;
 import entities_abstract.GameColumnBase;
 import entities_abstract.GameRowBase;
 import entities_abstract.SquareBase;
-import java.io.IOException;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,17 +18,9 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 public class Controller implements Initializable {
 
@@ -69,6 +60,10 @@ public class Controller implements Initializable {
     private boolean isAlive = true;
 
     private boolean runnable = true;
+    @FXML
+    private Text txtLevel;
+    @FXML
+    private Text txtGameStatus;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,7 +80,8 @@ public class Controller implements Initializable {
             @Override
             public void handle(long now) {
                 try {
-                    if (runnable && isAlive && !checkDie()) {
+                    if (isAlive && !checkDie()) {
+                        if(runnable)
                         gameLoop();
                     } else {
                         timer.stop();
@@ -129,16 +125,6 @@ public class Controller implements Initializable {
     }
 
     private void showAlert() {
-//        Optional<ButtonType> option = alert.showAndWait();
-// 
-//        if (option.get() == null) {
-//        } else if (option.get() == ButtonType.OK) {
-//           
-//        } else if (option.get() == ButtonType.CANCEL) {
-//           
-//        } else {
-//            
-//        }
         alert.show();
     }
 
@@ -273,6 +259,10 @@ public class Controller implements Initializable {
             }
             if (event.getCode() == KeyCode.SPACE) {
                 runnable = !runnable;
+                if(runnable)
+                    txtGameStatus.setText("Game Running");
+                else
+                    txtGameStatus.setText("Game Paused");
             }
         });
         mainPane.setOnKeyReleased(event -> {
