@@ -52,8 +52,7 @@ public class Square extends SquareBase {
         if (indexRow == Controller.TOTAL_ROW - 1) return false;
         GameColumnBase col = playArena.getColumns().get(this.indexCol);
         SquareBase[] squares = col.getSquareBases();
-        if (squares[this.indexRow+1] != null){
-            System.out.println("cant move");
+        if (squares[this.indexRow+1] != null){          
             return false;}
         return true;
 

@@ -98,8 +98,7 @@ public abstract class BlockBase {
         List<SquareBase> test = Arrays.asList(matrix);
         for (SquareBase square : matrix) {
             if (square.indexRow == Controller.TOTAL_ROW - 1) {
-                this.movable = false;
-                System.out.println("end");
+                this.movable = false;              
                 return false;
             } else if (!test.contains(playArena.getColumns().get(square.getIndexCol()).squareBases[square.indexRow + 1]))
                 if (!square.checkMoveDown()) {

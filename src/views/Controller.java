@@ -5,12 +5,12 @@ import entities_abstract.BlockBase;
 import entities_abstract.GameColumnBase;
 import entities_abstract.GameRowBase;
 import entities_abstract.SquareBase;
+import java.io.IOException;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -19,9 +19,17 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class Controller implements Initializable {
 
@@ -90,6 +98,7 @@ public class Controller implements Initializable {
             }
         };
         timer.start();
+         
     }
 
     private void initGrid() {
@@ -153,39 +162,49 @@ public class Controller implements Initializable {
         }
         return false;
     }
-    int countt = 0;
 
     private void checkRows() {
         Set<Integer> set = new HashSet<>();
         for (SquareBase square : currentBlock.getMatrix()) {
             set.add(square.getIndexRow());
         }
-
-        set.forEach((Integer index) -> {
+        List<Integer> list = set.stream().collect(Collectors.toList());     
+        Collections.sort(list);
+      
+        list.forEach(index -> {
             GameRowBase row = rows.get(index);
             if (row.checkFull()) {
-                countt++;
+                System.out.println("Row "+row.getIndexRow()+" is full");
                 row.remove();
+                for (int j = 0; j < 10; j ++) {
+                    GameColumnBase col = columns.get(j);
+                    for (int i = row.getIndexRow() - 1; i >= 0; i--) {
+                        SquareBase squareCol = col.getSquareBases()[i];
+                        if (squareCol != null) {
+                            squareCol.reLocate(squareCol.getIndexRow() + 1, squareCol.getIndexCol());
+                            squareCol.updateUI();
+                        }
+                    }
+                }
+
                 score += 1000;
                 bonus++;
             }
         });
 
-        for (int i = set.stream().reduce(Integer::min).get() - 1; i > -1; i--) {
-            for (SquareBase square : rows.get(i).getSquareBases()) {
-                if (square != null) {
-                    square.reLocate(square.getIndexRow() + countt, square.getIndexCol());
-                    square.updateUI();
-                }
-            }
-        }
-
+//        for (int i = set.stream().reduce(Integer::min).get() - 1; i > -1; i--) {
+//            for (SquareBase square : rows.get(i).getSquareBases()) {
+//                if (square != null) {
+//                    square.reLocate(square.getIndexRow() + countt, square.getIndexCol());
+//                    square.updateUI();
+//                }
+//            }
+//        }
         if (bonus > 0) {
             score += bonus * 500;
             bonus = -1;
         }
         txtScore.setText(score + "");
-        countt = 0;
     }
 
     private void initBlock() {
@@ -220,13 +239,12 @@ public class Controller implements Initializable {
                 break;
             }
         }
-        currentBlock = new IBlock(this, 4, 0);
+      //  currentBlock = new IBlock(this, 4, 0);
         currentBlock.addToPanel();
         loop = DEFAULT_LOOP;
         try {
-            Thread.sleep(500);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
