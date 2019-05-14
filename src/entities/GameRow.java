@@ -25,6 +25,8 @@ public class GameRow extends GameRowBase {
     public void remove() {
         for (int i = 0; i < 10; i++) {
             this.playArenaBase.gridPane.getChildren().remove(squareBases[i].getImageView());
+            
+            
         }
         squareBases = new SquareBase[10];
         playArenaBase.getColumns().forEach(gameColumnBase -> {

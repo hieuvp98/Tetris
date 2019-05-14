@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.media.AudioClip;
 
 public class Controller implements Initializable {
 
@@ -28,11 +29,17 @@ public class Controller implements Initializable {
 
     public static final int TOTAL_ROW = 18;
 
-    private static final int DEFAULT_LOOP = 150;
+    private static int DEFAULT_LOOP = 150;
+
+    private int nextBlock;
     @FXML
     public GridPane gridPane;
     @FXML
     public ImageView imgNext;
+    @FXML
+    public Text txtNext;
+    @FXML
+    public Text txtLevel;
     @FXML
     public Text txtScore;
     @FXML
@@ -48,22 +55,39 @@ public class Controller implements Initializable {
 
     @FXML
     public Pane mainPane;
-
+    @FXML
     private Alert alert;
 
     private ArrayList<GameRowBase> rows;
 
+   // private ArrayList<GameRowBase> rows2;
+
     private ArrayList<GameColumnBase> columns;
 
+   // private ArrayList<GameColumnBase> columns2;
+
     private BlockBase currentBlock;
+
+    private BlockBase currentBlock2;
 
     private boolean isAlive = true;
 
     private boolean runnable = true;
-    @FXML
-    private Text txtLevel;
+
     @FXML
     private Text txtGameStatus;
+//    @FXML
+//    private AnchorPane mainPane2;
+//    @FXML
+//    private GridPane gridPane2;
+//    @FXML
+//    private Text txtScore2;
+//    @FXML
+//    private Text txtLevel2;
+//    @FXML
+//    private Button btnReplay2;
+//    @FXML
+//    private Text txtGameStatus2;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,8 +95,10 @@ public class Controller implements Initializable {
     }
 
     private void init() {
+        //  initNewFrame();
         initGrid();
         initRowsCols();
+        nextBlock = new Random().nextInt(7);
         initBlock();
         eventHandler();
         initAlert();
@@ -80,9 +106,10 @@ public class Controller implements Initializable {
             @Override
             public void handle(long now) {
                 try {
-                    if (isAlive && !checkDie()) {
-                        if(runnable)
-                        gameLoop();
+                    if (isAlive) {
+                        if (runnable) {
+                            gameLoop();
+                        }
                     } else {
                         timer.stop();
                         //showAlert();
@@ -94,15 +121,27 @@ public class Controller implements Initializable {
             }
         };
         timer.start();
-         
+        initNewFrame();
+    }
+
+    private void initNewFrame() {
+        // new Frame
+
+    }
+
+    private void playSound(String url) {
+        AudioClip audioClip = new AudioClip(this.getClass().getResource("/sounds/" + url).toExternalForm());
+        audioClip.play();
     }
 
     private void initGrid() {
         for (int i = 0; i < TOTAL_ROW; i++) {
             gridPane.addRow(i);
+            //   gridPane2.addRow(i);
         }
         for (int i = 1; i < 10; i++) {
             gridPane.addColumn(i);
+            //   gridPane2.addColumn(i);
         }
         gridPane.setGridLinesVisible(false);
         for (int i = 0; i < TOTAL_ROW; i++) {
@@ -113,6 +152,14 @@ public class Controller implements Initializable {
             }
         }
 
+//        gridPane2.setGridLinesVisible(false);
+//        for (int i = 0; i < TOTAL_ROW; i++) {
+//            for (int j = 0; j < 10; j++) {
+//                Label node = new Label();
+//                node.getStyleClass().add("node");
+//                gridPane2.add(node, j, i);
+//            }
+//        }
     }
 
     private void initAlert() {
@@ -126,6 +173,7 @@ public class Controller implements Initializable {
 
     private void showAlert() {
         alert.show();
+        playSound("gameover.wav");
     }
 
     private void initRowsCols() {
@@ -137,6 +185,15 @@ public class Controller implements Initializable {
         for (int i = 0; i < TOTAL_ROW; i++) {
             rows.add(new GameRow(this, i));
         }
+
+//        columns2 = new ArrayList<>();
+//        rows2 = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            columns2.add(new GameColumn(this, i));
+//        }
+//        for (int i = 0; i < TOTAL_ROW; i++) {
+//            rows2.add(new GameRow(this, i));
+//        }
     }
 
     private boolean checkDie() {
@@ -150,19 +207,21 @@ public class Controller implements Initializable {
     }
 
     private void checkRows() {
+
         Set<Integer> set = new HashSet<>();
         for (SquareBase square : currentBlock.getMatrix()) {
             set.add(square.getIndexRow());
         }
-        List<Integer> list = set.stream().collect(Collectors.toList());     
+        List<Integer> list = set.stream().collect(Collectors.toList());
         Collections.sort(list);
-      
+
         list.forEach(index -> {
             GameRowBase row = rows.get(index);
             if (row.checkFull()) {
-                System.out.println("Row "+row.getIndexRow()+" is full");
+                loop = 1;
+                System.out.println("Row " + row.getIndexRow() + " is full");
                 row.remove();
-                for (int j = 0; j < 10; j ++) {
+                for (int j = 0; j < 10; j++) {
                     GameColumnBase col = columns.get(j);
                     for (int i = row.getIndexRow() - 1; i >= 0; i--) {
                         SquareBase squareCol = col.getSquareBases()[i];
@@ -177,25 +236,20 @@ public class Controller implements Initializable {
                 bonus++;
             }
         });
+        if (bonus > -1) {
+            playSound("clear.wav");
+        }
 
-//        for (int i = set.stream().reduce(Integer::min).get() - 1; i > -1; i--) {
-//            for (SquareBase square : rows.get(i).getSquareBases()) {
-//                if (square != null) {
-//                    square.reLocate(square.getIndexRow() + countt, square.getIndexCol());
-//                    square.updateUI();
-//                }
-//            }
-//        }
         if (bonus > 0) {
             score += bonus * 500;
-            bonus = -1;
         }
         txtScore.setText(score + "");
+        bonus = -1;
     }
 
     private void initBlock() {
-        int random = new Random().nextInt(7);
-        switch (random) {
+
+        switch (nextBlock) {
             case 0: {
                 currentBlock = new TBlock(this, 5, 1);
                 break;
@@ -225,8 +279,43 @@ public class Controller implements Initializable {
                 break;
             }
         }
-      //  currentBlock = new IBlock(this, 4, 0);
+        //      currentBlock2 = new IBlock(this, 4, 0);
         currentBlock.addToPanel();
+        if (!currentBlock.checkMovable()) {
+            isAlive = false;
+        }
+        nextBlock = new Random().nextInt(7);
+        switch (nextBlock) {
+            case 0: {
+                txtNext.setText("Next: T");
+                break;
+            }
+            case 1: {
+                txtNext.setText("Next: I");
+                break;
+            }
+            case 2: {
+                txtNext.setText("Next: J");
+                break;
+            }
+            case 3: {
+                txtNext.setText("Next: L");
+                break;
+            }
+            case 4: {
+                txtNext.setText("Next: O");
+                break;
+            }
+            case 5: {
+                txtNext.setText("Next: S");
+                break;
+            }
+            case 6: {
+                txtNext.setText("Next: Z");
+                break;
+            }
+        }
+        //   currentBlock2.addToPanel();
         loop = DEFAULT_LOOP;
         try {
             Thread.sleep(100);
@@ -234,13 +323,37 @@ public class Controller implements Initializable {
         }
     }
 
+    private void checkLevel() {
+
+        if (txtLevel.getText().equals("4") && score >= 30000) {
+            playSound("success.wav");
+            DEFAULT_LOOP = 40;
+            txtLevel.setText("4");
+        } else if (txtLevel.getText().equals("3") && score >= 20000) {
+            playSound("success.wav");
+            DEFAULT_LOOP = 60;
+            txtLevel.setText("4");
+        } else if (txtLevel.getText().equals("2") && score >= 10000) {
+            playSound("success.wav");
+            DEFAULT_LOOP = 90;
+            txtLevel.setText("3");
+        } else if (txtLevel.getText().equals("1") && score >= 5000) {
+            playSound("success.wav");
+            DEFAULT_LOOP = 120;
+            txtLevel.setText("2");
+        }
+    }
+
     private void gameLoop() throws InterruptedException {
         Thread.sleep(loop);
+        checkLevel();
         if (!currentBlock.checkMovable()) {
             checkRows();
             initBlock();
+            playSound("fall.wav");
         } else {
             currentBlock.move();
+            //  currentBlock2.move();
         }
     }
 
@@ -259,10 +372,12 @@ public class Controller implements Initializable {
             }
             if (event.getCode() == KeyCode.SPACE) {
                 runnable = !runnable;
-                if(runnable)
+                if (runnable) {
                     txtGameStatus.setText("Game Running");
-                else
+
+                } else {
                     txtGameStatus.setText("Game Paused");
+                }
             }
         });
         mainPane.setOnKeyReleased(event -> {
@@ -275,8 +390,14 @@ public class Controller implements Initializable {
     }
 
     private void replay() {
+        gameOverPane.setVisible(false);
+        isAlive = true;
         initGrid();
         initRowsCols();
+        initBlock();
+        DEFAULT_LOOP = 150;
+        txtScore.setText("0");
+        txtLevel.setText("1");
         timer.start();
         mainPane.requestFocus();
     }

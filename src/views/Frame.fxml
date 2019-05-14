@@ -38,12 +38,7 @@
          </font>
       </Text>
       <ImageView fx:id="imgNext" fitHeight="122.0" fitWidth="176.0" layoutX="422.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fill="#eecccc" layoutX="455.0" layoutY="515.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Advanced " textAlignment="CENTER">
-         <font>
-            <Font name="Comic Sans MS" size="27.0" />
-         </font>
-      </Text>
-      <Text fill="#eecccc" layoutX="450.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Programing" textAlignment="CENTER">
+      <Text fill="#eecccc" layoutX="451.0" layoutY="633.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player One" textAlignment="CENTER">
          <font>
             <Font name="Comic Sans MS" size="27.0" />
          </font>
@@ -57,9 +52,15 @@
             </Text>
             <Button fx:id="btnReplay" layoutX="280.0" layoutY="140.0" mnemonicParsing="false" text="Replay" />
          </children></Pane>
-      <Text fx:id="txtGameStatus" fill="WHITE" layoutX="475.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Running" textAlignment="CENTER" wrappingWidth="88.96875">
+      <Text fx:id="txtGameStatus" fill="WHITE" layoutX="474.0" layoutY="538.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Running" textAlignment="CENTER" wrappingWidth="88.96875">
          <font>
             <Font name="Comic Sans MS" size="24.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="imgNext" fitHeight="116.0" fitWidth="140.0" layoutX="427.0" layoutY="309.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="txtNext" fill="WHITE" layoutX="430.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Next">
+         <font>
+            <Font name="Comic Sans MS" size="26.0" />
          </font>
       </Text>
    </children>
