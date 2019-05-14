@@ -18,10 +18,14 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.media.AudioClip;
+import javafx.stage.Stage;
 
 public class Controller implements Initializable {
 
@@ -55,16 +59,15 @@ public class Controller implements Initializable {
 
     @FXML
     public Pane mainPane;
-    @FXML
     private Alert alert;
 
     private ArrayList<GameRowBase> rows;
 
-   // private ArrayList<GameRowBase> rows2;
+    private ArrayList<GameRowBase> rows2;
 
     private ArrayList<GameColumnBase> columns;
 
-   // private ArrayList<GameColumnBase> columns2;
+    private ArrayList<GameColumnBase> columns2;
 
     private BlockBase currentBlock;
 
@@ -76,18 +79,16 @@ public class Controller implements Initializable {
 
     @FXML
     private Text txtGameStatus;
-//    @FXML
-//    private AnchorPane mainPane2;
-//    @FXML
-//    private GridPane gridPane2;
-//    @FXML
-//    private Text txtScore2;
-//    @FXML
-//    private Text txtLevel2;
-//    @FXML
-//    private Button btnReplay2;
-//    @FXML
-//    private Text txtGameStatus2;
+    @FXML
+    private GridPane gridPane2;
+    @FXML
+    private Text txtScore2;
+    @FXML
+    private Text txtLevel2;
+    @FXML
+    private ImageView imgNext2;
+    @FXML
+    private Text txtNext2;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -121,12 +122,11 @@ public class Controller implements Initializable {
             }
         };
         timer.start();
-        initNewFrame();
+       // initNewFrame();
     }
 
     private void initNewFrame() {
-        // new Frame
-
+        
     }
 
     private void playSound(String url) {

@@ -8,18 +8,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane2" prefHeight="700.0" prefWidth="609.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.Controller">
+<AnchorPane fx:id="mainPane" prefHeight="736.0" prefWidth="1139.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.Controller">
    <children>
-      <GridPane id="grid" fx:id="gridPane3" gridLinesVisible="true" layoutX="5.0" layoutY="6.0" prefHeight="730.0" prefWidth="406.0">
+      <GridPane id="grid" fx:id="gridPane" gridLinesVisible="true" layoutX="5.0" layoutY="4.0" prefHeight="730.0" prefWidth="406.0" style="-fx-border-color: #ffffff;">
       </GridPane>
       <Text fill="WHITE" layoutX="429.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
          <font>
             <Font name="Comic Sans MS" size="27.0" />
          </font>
       </Text>
-      <Text fx:id="txtScore2" fill="#2402ff" layoutX="433.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="140.1416015625">
+      <Text fx:id="txtScore" fill="#2402ff" layoutX="429.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="128.44775390625">
          <font>
-            <Font name="Comic Sans MS Bold" size="33.0" />
+            <Font name="Comic Sans MS Bold" size="25.0" />
          </font>
       </Text>
       <Text fill="WHITE" layoutX="429.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level">
@@ -27,7 +27,7 @@
             <Font name="Comic Sans MS" size="27.0" />
          </font>
       </Text>
-      <Text fx:id="txtLevel2" fill="#2402ff" layoutX="429.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+      <Text fx:id="txtLevel" fill="#2402ff" layoutX="429.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
          <font>
             <Font name="Comic Sans MS Bold" size="33.0" />
          </font>
@@ -37,12 +37,7 @@
             <Font name="Comic Sans MS" size="27.0" />
          </font>
       </Text>
-      <ImageView fx:id="imgNext" fitHeight="122.0" fitWidth="176.0" layoutX="422.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fill="#eecccc" layoutX="455.0" layoutY="515.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Two" textAlignment="CENTER">
-         <font>
-            <Font name="Comic Sans MS" size="27.0" />
-         </font>
-      </Text>
+      <ImageView fx:id="imgNext" fitHeight="119.0" fitWidth="128.0" layoutX="422.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true" />
       <Pane id="gameOverPane" fx:id="gameOverPane" layoutY="255.0" prefHeight="208.0" prefWidth="620.0" visible="false">
          <children>
             <Text fill="WHITE" layoutX="200.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GAME OVER" textAlignment="CENTER">
@@ -50,11 +45,53 @@
                   <Font name="SVN-Comic Sans MS" size="53.0" />
                </font>
             </Text>
-            <Button fx:id="btnReplay2" layoutX="280.0" layoutY="140.0" mnemonicParsing="false" text="Replay" />
+            <Button fx:id="btnReplay" layoutX="280.0" layoutY="140.0" mnemonicParsing="false" text="Replay" />
          </children></Pane>
-      <Text fx:id="txtGameStatus2" fill="WHITE" layoutX="475.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Running" textAlignment="CENTER" wrappingWidth="88.96875">
+      <Text fx:id="txtGameStatus" fill="WHITE" layoutX="513.0" layoutY="618.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Running" textAlignment="CENTER" wrappingWidth="88.96875">
          <font>
             <Font name="Comic Sans MS" size="24.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="598.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
+         <font>
+            <Font name="Comic Sans MS" size="27.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtScore2" fill="#ff3d03" layoutX="598.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="128.44775390625">
+         <font>
+            <Font name="Comic Sans MS Bold" size="26.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="598.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level">
+         <font>
+            <Font name="Comic Sans MS" size="27.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtLevel2" fill="#ff0303" layoutX="598.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+         <font>
+            <Font name="Comic Sans MS Bold" size="33.0" />
+         </font>
+      </Text>
+      <Text fill="#7226e4" layoutX="422.0" layoutY="548.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt; player 1">
+         <font>
+            <Font name="Comic Sans MS" size="27.0" />
+         </font>
+      </Text>
+      <Text fill="#fc2929" layoutX="582.0" layoutY="704.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" player 2 &gt;">
+         <font>
+            <Font name="Comic Sans MS" size="27.0" />
+         </font>
+      </Text>
+      <GridPane id="grid" fx:id="gridPane2" gridLinesVisible="true" layoutX="726.0" layoutY="4.0" prefHeight="730.0" prefWidth="406.0" style="-fx-border-color: #ffffff;" />
+      <Text fx:id="txtNext" fill="WHITE" layoutX="423.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NEXT">
+         <font>
+            <Font name="Comic Sans MS" size="27.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="imgNext2" fitHeight="119.0" fitWidth="128.0" layoutX="582.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="txtNext2" fill="WHITE" layoutX="608.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NEXT">
+         <font>
+            <Font name="Comic Sans MS" size="27.0" />
          </font>
       </Text>
    </children>

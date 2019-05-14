@@ -5,6 +5,14 @@
         <group>
             <file>file:/host/laptrinh/TetrisGame/src/views/Controller.java</file>
             <file>file:/host/laptrinh/TetrisGame/src/views/Main.java</file>
+            <file>file:/host/laptrinh/TetrisGame/src/entities/GameRow.java</file>
+            <file>file:/host/laptrinh/TetrisGame/src/entities/Square.java</file>
+            <file>file:/host/laptrinh/TetrisGame/src/entities_abstract/SquareBase.java</file>
+            <file>file:/host/laptrinh/TetrisGame/src/views/Frame3.fxml</file>
+            <file>file:/host/laptrinh/TetrisGame/src/entities_abstract/BlockBase.java</file>
+            <file>file:/host/laptrinh/TetrisGame/src/views/Frame.fxml</file>
+            <file>file:/host/laptrinh/TetrisGame/src/entities/TBlock.java</file>
+            <file>file:/host/laptrinh/TetrisGame/src/views/Begin.fxml</file>
         </group>
     </open-files>
 </project-private>
