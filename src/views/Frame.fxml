@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="609.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.Controller">
+<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="609.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.Controller">
     <children>
         <Text fx:id="txtGameStatus" fill="WHITE" layoutX="474.0" layoutY="538.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Running" textAlignment="CENTER" wrappingWidth="88.96875">
             <font>
@@ -43,7 +43,7 @@
             </font>
         </Text>
         <ImageView fx:id="imgNext" fitHeight="122.0" fitWidth="176.0" layoutX="422.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true" />
-        <Text fill="#eecccc" layoutX="451.0" layoutY="633.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player One" textAlignment="CENTER">
+        <Text fx:id="btnExitGame" fill="#eecccc" layoutX="451.0" layoutY="633.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit game" textAlignment="CENTER">
             <font>
                 <Font name="Comic Sans MS" size="27.0" />
             </font>
@@ -58,11 +58,20 @@
                 <Button fx:id="btnReplay" layoutX="280.0" layoutY="140.0" mnemonicParsing="false" text="Replay" />
             </children>
         </Pane>
-        <ImageView fx:id="imgNext" fitHeight="116.0" fitWidth="140.0" layoutX="427.0" layoutY="309.0" pickOnBounds="true" preserveRatio="true" />
         <Text fx:id="txtNext" fill="WHITE" layoutX="430.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Next">
             <font>
                 <Font name="Comic Sans MS" size="26.0" />
             </font>
         </Text>
+      <Pane fx:id="startPane" layoutX="60.0" layoutY="180.0" opacity="0.9" prefHeight="250.0" prefWidth="500.0" style="-fx-background-color: #000000; -fx-border-color: #ff0000;">
+         <children>
+            <ImageView fx:id="imgArrow" fitHeight="150.0" fitWidth="200.0" layoutX="33.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
+            <Text fx:id="btnStart" fill="WHITE" layoutX="309.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Game">
+               <font>
+                  <Font name="Comic Sans MS" size="27.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

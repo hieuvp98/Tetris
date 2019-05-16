@@ -27,7 +27,6 @@ public class TBlock extends BlockBase {
 
     @Override
     public boolean checkTransformable() {
-        System.out.println("checking");
         switch (statusForm) {
             case 1: {
                 SquareBase[] squareBasesTop = playArena.getRows().get(mainRow - 1).getSquareBases();

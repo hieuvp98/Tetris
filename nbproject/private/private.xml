@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/host/laptrinh/TetrisGame/src/views/Controller.java</file>
-            <file>file:/host/laptrinh/TetrisGame/src/views/Main.java</file>
-            <file>file:/host/laptrinh/TetrisGame/src/entities_abstract/SquareBase.java</file>
-            <file>file:/host/laptrinh/TetrisGame/src/views/Frame3.fxml</file>
-            <file>file:/host/laptrinh/TetrisGame/src/views/BeginController.java</file>
-            <file>file:/host/laptrinh/TetrisGame/src/views/Frame.fxml</file>
-            <file>file:/host/laptrinh/TetrisGame/src/entities/TBlock.java</file>
-            <file>file:/host/laptrinh/TetrisGame/src/views/Begin.fxml</file>
+            <file>file:/D:/laptrinh/TetrisGame/src/views/Controller.java</file>
+            <file>file:/D:/laptrinh/TetrisGame/src/entities_abstract2/SquareBase2.java</file>
+            <file>file:/D:/laptrinh/TetrisGame/src/views/Main.java</file>
+            <file>file:/D:/laptrinh/TetrisGame/src/entities_abstract2/GameColumnBase2.java</file>
+            <file>file:/D:/laptrinh/TetrisGame/src/views/MultiController.java</file>
+            <file>file:/D:/laptrinh/TetrisGame/src/entities2/Square2.java</file>
+            <file>file:/D:/laptrinh/TetrisGame/src/entities_abstract2/GameRowBase2.java</file>
         </group>
     </open-files>
 </project-private>

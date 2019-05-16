@@ -5,10 +5,10 @@ import entities_abstract.BlockBase;
 import entities_abstract.GameColumnBase;
 import entities_abstract.GameRowBase;
 import entities_abstract.SquareBase;
+import java.io.IOException;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -18,24 +18,31 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javafx.animation.Animation;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Controller implements Initializable {
 
-    private int loop = DEFAULT_LOOP;
+    protected int loop = DEFAULT_LOOP;
 
     public static final int TOTAL_ROW = 18;
 
-    private static int DEFAULT_LOOP = 150;
-
-    private int nextBlock;
+    public static int DEFAULT_LOOP = 150;
+    
+    protected ArrayList<Integer> listBlock;
+    
+    protected int pointer = 0;
+    
+    AudioClip audioClip;
+    
     @FXML
     public GridPane gridPane;
     @FXML
@@ -51,58 +58,57 @@ public class Controller implements Initializable {
     @FXML
     public Button btnReplay;
 
-    private int score = 0;
+    protected int score = 0;
 
-    private int bonus = -1;
+    protected int bonus = -1;
 
-    private AnimationTimer timer;
+    protected AnimationTimer timer;
 
     @FXML
     public Pane mainPane;
-    private Alert alert;
 
-    private ArrayList<GameRowBase> rows;
+    protected ArrayList<GameRowBase> rows;
 
-    private ArrayList<GameRowBase> rows2;
+    protected ArrayList<GameColumnBase> columns;
 
-    private ArrayList<GameColumnBase> columns;
+    protected BlockBase currentBlock;
 
-    private ArrayList<GameColumnBase> columns2;
+    protected boolean isAlive = true;
 
-    private BlockBase currentBlock;
-
-    private BlockBase currentBlock2;
-
-    private boolean isAlive = true;
-
-    private boolean runnable = true;
+    protected boolean runnable = true;
 
     @FXML
-    private Text txtGameStatus;
+    public Text txtGameStatus;
     @FXML
-    private GridPane gridPane2;
+    private Text btnExitGame;
     @FXML
-    private Text txtScore2;
+    private Pane startPane;
     @FXML
-    private Text txtLevel2;
+    private ImageView imgArrow;
     @FXML
-    private ImageView imgNext2;
-    @FXML
-    private Text txtNext2;
+    private Text btnStart;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         init();
     }
 
-    private void init() {
-        //  initNewFrame();
+    protected void init() {
+        DEFAULT_LOOP = 150;
+        listBlock = new ArrayList<>();
         initGrid();
         initRowsCols();
-        nextBlock = new Random().nextInt(7);
-        initBlock();
-        eventHandler();
-        initAlert();
+        listBlock.add(new Random().nextInt(7));
+        eventHandler();     
+        initTimer();
+        initBeginPaneSingle();
+        audioClip = new AudioClip(this.getClass().getResource("/sounds/theme.mp3").toExternalForm());
+        audioClip.setVolume(audioClip.getVolume() * 0.5);
+        audioClip.setCycleCount(Animation.INDEFINITE);
+        audioClip.play();
+    }
+
+    protected void initTimer() {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -117,31 +123,24 @@ public class Controller implements Initializable {
                         gameOverPane.setVisible(true);
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
         };
-        timer.start();
-       // initNewFrame();
     }
 
-    private void initNewFrame() {
-        
+    protected void playSound(String url) {
+        AudioClip audioClipa = new AudioClip(this.getClass().getResource("/sounds/" + url).toExternalForm());
+        audioClipa.play();
     }
 
-    private void playSound(String url) {
-        AudioClip audioClip = new AudioClip(this.getClass().getResource("/sounds/" + url).toExternalForm());
-        audioClip.play();
-    }
-
-    private void initGrid() {
+    protected void initGrid() {
         for (int i = 0; i < TOTAL_ROW; i++) {
             gridPane.addRow(i);
-            //   gridPane2.addRow(i);
+           
         }
         for (int i = 1; i < 10; i++) {
             gridPane.addColumn(i);
-            //   gridPane2.addColumn(i);
+        
         }
         gridPane.setGridLinesVisible(false);
         for (int i = 0; i < TOTAL_ROW; i++) {
@@ -151,32 +150,10 @@ public class Controller implements Initializable {
                 gridPane.add(node, j, i);
             }
         }
-
-//        gridPane2.setGridLinesVisible(false);
-//        for (int i = 0; i < TOTAL_ROW; i++) {
-//            for (int j = 0; j < 10; j++) {
-//                Label node = new Label();
-//                node.getStyleClass().add("node");
-//                gridPane2.add(node, j, i);
-//            }
-//        }
     }
 
-    private void initAlert() {
-        alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Game Over");
-        alert.setHeaderText("Game over. Do you want replay?");
-        alert.setContentText("Replay?");
-        gameOverPane.getChildren().add(new Text("Game OVer"));
 
-    }
-
-    private void showAlert() {
-        alert.show();
-        playSound("gameover.wav");
-    }
-
-    private void initRowsCols() {
+    protected void initRowsCols() {
         columns = new ArrayList<>();
         rows = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -185,18 +162,9 @@ public class Controller implements Initializable {
         for (int i = 0; i < TOTAL_ROW; i++) {
             rows.add(new GameRow(this, i));
         }
-
-//        columns2 = new ArrayList<>();
-//        rows2 = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            columns2.add(new GameColumn(this, i));
-//        }
-//        for (int i = 0; i < TOTAL_ROW; i++) {
-//            rows2.add(new GameRow(this, i));
-//        }
     }
 
-    private boolean checkDie() {
+    protected boolean checkDie() {
         for (GameColumnBase column : columns) {
             if (column.checkFull()) {
                 System.out.println("game over");
@@ -206,7 +174,7 @@ public class Controller implements Initializable {
         return false;
     }
 
-    private void checkRows() {
+    protected void checkRows() {
 
         Set<Integer> set = new HashSet<>();
         for (SquareBase square : currentBlock.getMatrix()) {
@@ -246,10 +214,27 @@ public class Controller implements Initializable {
         txtScore.setText(score + "");
         bonus = -1;
     }
+    
+    private void initBeginPaneSingle() {
+        startPane.setVisible(true);
+        imgArrow.setImage(new Image(this.getClass().getClassLoader().getResource("images/arrow.png").toExternalForm()));
+        btnStart.setOnMouseEntered(e -> {
+            btnStart.setFont(new Font("Comic Sans MS", 35));
+        });
+        btnStart.setOnMouseExited(e -> {
+            btnStart.setFont(new Font("Comic Sans MS", 24));
+        });
+        btnStart.setOnMouseClicked(e -> {
+            initBlock();
+            timer.start();          
+            startPane.setVisible(false);
+            
+        });
+    }
 
-    private void initBlock() {
+    protected void initBlock() {
 
-        switch (nextBlock) {
+        switch (listBlock.get(pointer)) {
             case 0: {
                 currentBlock = new TBlock(this, 5, 1);
                 break;
@@ -279,39 +264,48 @@ public class Controller implements Initializable {
                 break;
             }
         }
+        pointer++;
         //      currentBlock2 = new IBlock(this, 4, 0);
         currentBlock.addToPanel();
         if (!currentBlock.checkMovable()) {
             isAlive = false;
+             playSound("gameover.wav");
         }
-        nextBlock = new Random().nextInt(7);
-        switch (nextBlock) {
+        listBlock.add(new Random().nextInt(7));
+        switch (listBlock.get(pointer)) {
             case 0: {
                 txtNext.setText("Next: T");
+                imgNext.setImage(new Image(getClass().getClassLoader().getResource("images/T-Block.png").toExternalForm()));
                 break;
             }
             case 1: {
                 txtNext.setText("Next: I");
+                imgNext.setImage(new Image(getClass().getClassLoader().getResource("images/I-Block.png").toExternalForm()));
                 break;
             }
             case 2: {
                 txtNext.setText("Next: J");
+                imgNext.setImage(new Image(getClass().getClassLoader().getResource("images/J-Block.png").toExternalForm()));
                 break;
             }
             case 3: {
                 txtNext.setText("Next: L");
+                imgNext.setImage(new Image(getClass().getClassLoader().getResource("images/L-Block.png").toExternalForm()));
                 break;
             }
             case 4: {
                 txtNext.setText("Next: O");
+                imgNext.setImage(new Image(getClass().getClassLoader().getResource("images/O-Block.png").toExternalForm()));
                 break;
             }
             case 5: {
                 txtNext.setText("Next: S");
+                imgNext.setImage(new Image(getClass().getClassLoader().getResource("images/S-Block.png").toExternalForm()));
                 break;
             }
             case 6: {
                 txtNext.setText("Next: Z");
+                imgNext.setImage(new Image(getClass().getClassLoader().getResource("images/Z-Block.png").toExternalForm()));
                 break;
             }
         }
@@ -323,7 +317,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private void checkLevel() {
+    protected void checkLevel() {
 
         if (txtLevel.getText().equals("4") && score >= 30000) {
             playSound("success.wav");
@@ -344,7 +338,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private void gameLoop() throws InterruptedException {
+    protected void gameLoop() throws InterruptedException {
         Thread.sleep(loop);
         checkLevel();
         if (!currentBlock.checkMovable()) {
@@ -357,7 +351,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private void eventHandler() {
+    protected void eventHandler() {
         mainPane.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.RIGHT && currentBlock.checkTurnRight()) {
                 currentBlock.setDirectionX(1);
@@ -387,10 +381,23 @@ public class Controller implements Initializable {
             replay();
             gameOverPane.setVisible(false);
         });
+        btnExitGame.setOnMouseClicked(e -> {
+           try {
+                timer.stop();
+                audioClip.stop();
+                Parent parent = FXMLLoader.load(getClass().getResource("Begin.fxml"));
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage) mainPane.getScene().getWindow();
+                stage.setScene(scene);
+            } catch (IOException ex) {
+                System.out.println("load error: " + ex.getMessage());
+            }
+        });
     }
 
-    private void replay() {
+    protected void replay() {
         gameOverPane.setVisible(false);
+        pointer = 0;
         isAlive = true;
         initGrid();
         initRowsCols();

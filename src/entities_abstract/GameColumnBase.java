@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public abstract class GameColumnBase {
 
-    protected SquareBase[] squareBases;
+    public SquareBase[] squareBases;
 
     protected Controller playArenaBase;
 
